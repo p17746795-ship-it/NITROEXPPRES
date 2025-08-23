@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NitroExpress - Discord Nitro & FIVEM Scripts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0e0e10;
+            color: #f1f1f1;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #5865F2 0%, #2b2d31 100%);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: #ff73fa;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #ff73fa;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232b2d31"/><path d="M0 0L100 100" stroke="%235865F2" stroke-width="2"/><path d="M100 0L0 100" stroke="%235865F2" stroke-width="2"/></svg>');
+            background-size: cover;
+            padding: 5rem 1rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #5865F2, #ff73fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #d1d1d1;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #5865F2;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #4752c4;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-buy {
+            background: #ff73fa;
+        }
+        
+        .btn-buy:hover {
+            background: #e65cdd;
+        }
+        
+        .products {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 1rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            color: white;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background: #1e1f22;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #ff73fa;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .product-image {
+            height: 180px;
+            background: linear-gradient(135deg, #5865F2 0%, #2b2d31 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .product-info p {
+            color: #b9bbbe;
+            margin-bottom: 1rem;
+            min-height: 72px;
+        }
+        
+        .product-price {
+            font-size: 1.8rem;
+            color: #ff73fa;
+            margin: 1rem 0;
+            font-weight: bold;
+        }
+        
+        .product-price s {
+            font-size: 1.2rem;
+            color: #b9bbbe;
+            margin-right: 0.5rem;
+        }
+        
+        .features {
+            background: #151618;
+            padding: 4rem 1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: #1e1f22;
+            border-radius: 10px;
+        }
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #5865F2;
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background: #151618;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            margin-top: 2rem;
+            color: #b9bbbe;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with navigation -->
+    <header>
+        <nav>
+            <div class="logo">Nitro<span>Express</span></div>
+            <ul class="nav-links">
+                <li><a href="#discord-nitro">Discord Nitro</a></li>
+                <li><a href="#fivem-scripts">FIVEM Scripts</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero section -->
+    <section class="hero">
+        <h1>Premium Discord Nitro & FIVEM Scripts</h1>
+        <p>Upgrade your Discord experience with Premium Nitro and enhance your FIVEM server with our premium scripts. Fast delivery and 24/7 support.</p>
+        <a href="#products" class="btn">Browse Products</a>
+    </section>
+
+    <!-- Products section -->
+    <section class="products" id="products">
+        <h2 class="section-title">Our Products</h2>
+        
+        <div class="product-grid">
+            <!-- Discord Nitro Products -->
+            <div class="product-card">
+                <div class="product-badge">Popular</div>
+                <div class="product-image"><i class="fab fa-discord"></i></div>
+                <div class="product-info">
+                    <h3>Discord Nitro 1 Month</h3>
+                    <p>Premium Discord Nitro for one month. Enjoy HD streaming, custom emojis, and server boosting.</p>
+                    <div class="product-price">€7.00</div>
+                    <button class="btn btn-buy" onclick="orderProduct('Discord Nitro 1 Month', 7.00)">Buy Now</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-badge">Best Value</div>
+                <div class="product-image"><i class="fab fa-discord"></i></div>
+                <div class="product-info">
+                    <h3>Discord Nitro 3 Months</h3>
+                    <p>Premium Discord Nitro for three months. All Nitro features at a discounted price.</p>
+                    <div class="product-price">€15.00 <s>€21.00</s></div>
+                    <button class="btn btn-buy" onclick="orderProduct('Discord Nitro 3 Months', 15.00)">Buy Now</button>
+                </div>
+            </div>
+            
+            <!-- FIVEM Scripts -->
+            <div class="product-card">
+                <div class="product-image"><i class="fas fa-car"></i></div>
+                <div class="product-info">
+                    <h3>FIVEM Car Pack</h3>
+                    <p>Premium vehicle pack for your FIVEM server with 40+ high quality cars and customization options.</p>
+                    <div class="product-price">€15.99</div>
+                    <button class="btn btn-buy" onclick="orderProduct('FIVEM Car Pack', 15.99)">Buy Now</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image"><i class="fas fa-gamepad"></i></div>
+                <div class="product-info">
+                    <h3>FIVEM SERVER</h3>
+                    <p>FiveM server ready.</p>
+                    <div class="product-price">€29.99</div>
+                    <button class="btn btn-buy" onclick="orderProduct('FIVEM RPG System', 29.99)">Buy Now</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image"><i class="fas fa-tshirt"></i></div>
+                <div class="product-info">
+                    <h3>FIVEM Clothing Pack</h3>
+                    <p>Exclusive clothing pack with 50+ items for your FIVEM server. Regular updates with new items.</p>
+                    <div class="product-price">€12.99</div>
+                    <button class="btn btn-buy" onclick="orderProduct('FIVEM Clothing Pack', 12.99)">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Why Choose Us</h2>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>Instant Delivery</h3>
+                <p>Receive your product instantly after payment</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Secure Payment</h3>
+                <p>All payments are secure and encrypted</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-headset"></i>
+                <h3>24/7 Support</h3>
+                <p>Our team is always ready to help you</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-star"></i>
+                <h3>Quality Products</h3>
+                <p>We offer only tested and verified products</p>
+            </div>
+        </div>
+
+           <div class="feature-card">
+                <i class="fas fa-star"></i>
+                <h3>Discord</h3>
+                <p>We will need our discord to write to someone from TNL2 | PlamkataBG_109,Borkata or TNL2 | 𝕯𝖗𝖔𝖌𝖔𝖓 will send you an invitation if you can't join our discord and post a ticket https://discord.gg/SBRP3XUR this is our discord</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h2>NitroExpress</h2>
+            <p>Your trusted source for Discord Nitro and FIVEM scripts</p>
+            
+            <div class="contact-info">
+                <p>Email: boris4eto1234@gmail.com</p>
+                <p>© 2023 NitroExpress. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Function to handle product orders
+        function orderProduct(productName, productPrice) {
+            // Get user information through prompts
+            const name = prompt("Please enter your name:");
+            if (!name) return; // User cancelled
+                
+            const discord = prompt("Please enter your Discord username:");
+            if (!discord) return;
+            
+            const email = prompt("Please enter your email address:");
+            if (!email) return;
+            
+            // Create email content
+            const subject = `Order for ${productName}`;
+            const body = `Hello,\n\nI would like to order ${productName} for €${productPrice}.\n\nMy details:\nName: ${name}\nDiscord: ${discord}\nEmail: ${email}\n\nPlease let me know how to proceed with the payment.`;
+            
+            // Encode the subject and body for URL
+            const encodedSubject = encodeURIComponent(subject);
+            const encodedBody = encodeURIComponent(body);
+            
+            // Redirect to Gmail with pre-filled email
+            window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=boris4eto1234@gmail.com&su=${encodedSubject}&body=${encodedBody}`;
+        }
+    </script>
+</body>
+</html>
